@@ -1,6 +1,10 @@
 <script lang="ts">
 	import dashboard_user_icon from '$lib/assets/dashboard_user_icon.svg';
 	import ProjectCard from '$lib/components/user-components/dashboard-components/project-card.svelte';
+	import { onMount } from 'svelte';
+	import { authComponent } from '$lib';
+
+	$authComponent.activeItem = '/dashboard';
 </script>
 
 <div class="bg-submain min-h-screen pt-[49px] px-[58.5px]">
@@ -31,13 +35,13 @@
 		<span class="text-[20px] font-semibold text-main">Recent Project(s)</span>
 		<hr class="mt-[13px] border-[1px] border-main" />
 
-		<div class="px-[13px] mt-[39px] gap-[39px] flex">
-			<div class="w-full">
-				<ProjectCard />
-			</div>
-
-			<div class="w-full">
-				<ProjectCard />
+		<div class=" mt-[39px]">
+			<div class="w-full flex flex-wrap justify-center gap-[32px]">
+				{#each ['', '', '', ''] as sample}
+					<div class="w-[459px] h-[195px]">
+						<ProjectCard />
+					</div>
+				{/each}
 			</div>
 		</div>
 	</div>

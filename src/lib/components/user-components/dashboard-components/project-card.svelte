@@ -2,13 +2,13 @@
 	import dashboard_card_image from '$lib/assets/dashboard_card_image.svg';
 </script>
 
-<div class="py-[30.5px] px-[30px] bg-white flex flex-col gap-[13px]">
+<div class="py-[30.5px] px-[30px] bg-white flex flex-col gap-[13px] w-full">
 	<div class="flex items-center gap-[10px]">
 		<div class="w-full">
 			<img src={dashboard_card_image} alt="dashboard-card-icon" class="" />
 		</div>
 
-		<div class="flex flex-col gap-[14px]">
+		<div class="flex flex-col gap-[14px] w-full">
 			<span class="font-bold text-[15px]">PROJECT:</span>
 			<span class="font-semibold text-[13px] truncate"
 				>A Web - based Student Collaboration for Stu...

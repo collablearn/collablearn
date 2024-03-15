@@ -8,7 +8,7 @@ declare global {
 			supabase: SupabaseClient
 			supabaseAdmin: SupabaseClient
 			getSession: () => Promise<Session | null>
-
+			isLogged: () => "has auth" | "no auth" | "no proper cookies" | "no cookies detected"
 		}
 
 

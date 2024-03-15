@@ -1,8 +1,7 @@
 import { writable } from "svelte/store";
 
-export const loginComponent = writable({
-    showForgotPass: false,
-    showCreateAccount: false
+export const staticComponent = writable({
+    showSuccessCreateAccount: false
 })
 
 export const authComponent = writable({

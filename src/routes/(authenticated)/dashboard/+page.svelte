@@ -38,7 +38,7 @@
 		<div class=" mt-[39px]">
 			<div class="w-full flex flex-wrap justify-center gap-[32px]">
 				{#each ['', '', '', ''] as sample}
-					<div class="w-[459px]">
+					<div class="w-[459px] h-[195px]">
 						<ProjectCard />
 					</div>
 				{/each}

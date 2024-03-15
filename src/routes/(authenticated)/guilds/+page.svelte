@@ -1,6 +1,9 @@
 <script lang="ts">
 	import search_icon from '$lib/assets/search_icon.svg';
 	import GuideCard from '$lib/components/user-components/guild-components/guide-card.svelte';
+	import { authComponent } from '$lib';
+
+	$authComponent.activeItem = '/guilds';
 </script>
 
 <div class="bg-submain min-h-screen pt-[49px] px-[58.5px]">
@@ -33,9 +36,9 @@
 
 	<hr class="mt-[33px] border-[1px] border-main" />
 
-	<div class="mt-[54px] flex flex-wrap gap-[118px] justify-center items-center">
-		{#each ['', '', '', ''] as sample}
-			<div class="w-[401px]">
+	<div class="mt-[54px] flex flex-wrap gap-x-[118px] gap-y-[41px] justify-center">
+		{#each ['', '', '', '', '', ''] as sample}
+			<div class="w-[401px] h-[157px]">
 				<GuideCard />
 			</div>
 		{/each}

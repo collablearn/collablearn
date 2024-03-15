@@ -33,7 +33,7 @@
 <NavHeader />
 
 <div class="flex">
-	<div class="w-[341px] bg-[#691D1F] min-h-screen flex flex-col pt-[49px] transition-all">
+	<div class="w-[341px] bg-[#691D1F] flex flex-col pt-[49px] transition-all">
 		{#each selections as selection}
 			<a
 				href={selection.url}

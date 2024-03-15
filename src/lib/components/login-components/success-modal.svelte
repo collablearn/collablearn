@@ -2,10 +2,10 @@
 	import check_icon from '$lib/assets/check_icon.svg';
 	import { scale } from 'svelte/transition';
 
-	export let showModal = false;
+	export let showSuccessCreateModal = false;
 </script>
 
-{#if showModal}
+{#if showSuccessCreateModal}
 	<div
 		class="fixed left-0 right-0 bottom-0 top-0 flex flex-col justify-center items-center bg-[#00000050]"
 	>
@@ -24,7 +24,7 @@
 			<div class="mt-[67px]">
 				<button
 					class="w-[218px] py-[15.5px] flex justify-center items-center bg-main text-white text-[20px] font-bold rounded-[26px]"
-					on:click={() => (showModal = false)}
+					on:click={() => (showSuccessCreateModal = false)}
 					>Got it!
 				</button>
 			</div>

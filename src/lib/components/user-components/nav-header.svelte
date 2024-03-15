@@ -5,8 +5,36 @@
 	import notif_icon from '$lib/assets/notif_icon.svg';
 	import feedback_icon from '$lib/assets/feedback_icon.svg';
 	import logout_icon from '$lib/assets/logout_icon.svg';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { ResultModel } from '$lib/types';
+	import { goto } from '$app/navigation';
+	import Loader from '../general-components/loader.svelte';
 
 	let showInfo = false;
+	let logoutLoader = false;
+
+	const logoutActionNews: SubmitFunction = () => {
+		logoutLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg }
+			} = result as ResultModel<{ msg: string }>;
+
+			switch (status) {
+				case 200:
+					goto('/');
+					logoutLoader = false;
+					break;
+
+				case 401:
+					logoutLoader = false;
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 <nav class="h-[86px] bg-[#911F1F] flex items-center justify-between pl-[24px] pr-[37px]">
@@ -48,12 +76,20 @@
 					</button>
 				</div>
 
-				<div class="mt-[18px]">
-					<button class="text-[18px] text-white flex items-center gap-[20.6px]">
+				<form
+					method="post"
+					action="/?/logoutAction"
+					use:enhance={logoutActionNews}
+					class="mt-[18px]"
+				>
+					<button
+						class="text-[18px] text-white flex items-center gap-[20.6px]"
+						disabled={logoutLoader}
+					>
 						<img src={logout_icon} alt="notif-icon" class="" />
-						Log Out
+						<Loader name="Log out" loader={logoutLoader} loaderName="Logging out..." />
 					</button>
-				</div>
+				</form>
 			</div>
 		{/if}
 	</div>

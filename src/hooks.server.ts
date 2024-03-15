@@ -1,12 +1,32 @@
 
 import { createServerClient } from '@supabase/ssr'
-import type { Handle } from '@sveltejs/kit'
+import type { Session } from '@supabase/supabase-js';
+import { redirect, type Handle } from '@sveltejs/kit'
 
 const supabaseURL: string = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKEY: string = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabaseAdminKEY: string = import.meta.env.VITE_SUPABASE_ADMIN_KEY;
 
 export const handle: Handle = async ({ event, resolve }) => {
+
+    const { cookies } = event;
+
+    event.locals.isLogged = () => {
+        if (cookies) {
+            try {
+                const session: Session = JSON.parse(cookies.get("sb-climcdnnyuyrfcyxhewr-auth-token") as string);
+
+                if (session) {
+                    return "has auth"
+                } else {
+                    return "no auth"
+                }
+            } catch (error) {
+                return "no proper cookies"
+            }
+        } else return "no cookies detected"
+    }
+
     event.locals.supabase = createServerClient(supabaseURL, supabaseKEY, {
         cookies: {
             get: (key) => event.cookies.get(key),

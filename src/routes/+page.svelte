@@ -3,8 +3,27 @@
 	import CreateAccount from '$lib/components/login-components/create-account.svelte';
 	import ForgotPassword from '$lib/components/login-components/forgotpassword.svelte';
 	import { loginComponent } from '$lib';
-	import SuccessModal from '$lib/components/login-components/success-modal.svelte';
-	import { goto } from '$app/navigation';
+
+	import { enhance } from '$app/forms';
+	import { type SubmitFunction } from '@sveltejs/kit';
+	import type { ResultModel } from '$lib/types';
+	import type { Session } from '@supabase/supabase-js';
+	import { fade, scale } from 'svelte/transition';
+	import Loader from '$lib/components/general-components/loader.svelte';
+
+	type LoginVal = {
+		email: string[];
+		password: string[];
+	};
+
+	type LoginAction = {
+		session: Session;
+		msg: string;
+		errors: LoginVal;
+	};
+
+	let formActionErrors: LoginVal | null = null;
+	let dbErrorMsg = '';
 
 	const footerLanguage = [
 		'English',
@@ -19,11 +38,38 @@
 		'Deutsch'
 	];
 
-	let showModal = false;
-</script>
+	let loginLoader = false;
 
-<!--Show Success-->
-<SuccessModal bind:showModal />
+	const loginActionNews: SubmitFunction = () => {
+		loginLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { session, msg, errors }
+			} = result as ResultModel<LoginAction>;
+
+			switch (status) {
+				case 200:
+					formActionErrors = null;
+					loginLoader = false;
+					break;
+
+				case 400:
+					dbErrorMsg = '';
+					formActionErrors = errors;
+					loginLoader = false;
+					break;
+				case 401:
+					dbErrorMsg = '';
+					dbErrorMsg = msg;
+					formActionErrors = null;
+					loginLoader = false;
+					break;
+			}
+			await update();
+		};
+	};
+</script>
 
 <!--Show Forgot Password and Create Account-->
 {#if $loginComponent.showForgotPass}
@@ -39,21 +85,50 @@
 		</div>
 
 		<div class="mt-[85px] w-[437px]">
-			<form class="flex flex-col gap-[26px]">
-				<input
-					type="email"
-					class="h-[55px] rounded-lg py-[17px] px-[26px]"
-					placeholder="Enter your Email"
-				/>
-				<input
-					type="password"
-					class="h-[55px] rounded-lg py-[17px] px-[26px]"
-					placeholder="Enter your Password"
-				/>
+			<div class="flex justify-center">
+				<span class="text-submain my-[20px] text-center">{dbErrorMsg}</span>
+			</div>
+			<form
+				method="post"
+				action="?/loginAction"
+				enctype="multipart/form-data"
+				use:enhance={loginActionNews}
+				class="flex flex-col gap-[26px]"
+			>
+				<label class="w-full">
+					{#each formActionErrors?.email ?? [] as errorMsg}
+						<span class="text-submain" transition:fade>{errorMsg}</span>
+					{/each}
+					<input
+						name="email"
+						type="email"
+						class="h-[55px] rounded-lg py-[17px] px-[26px] w-full"
+						placeholder="Enter your Email"
+					/>
+				</label>
+
+				<label class="w-full">
+					{#each formActionErrors?.password ?? [] as errorMsg}
+						<span class="text-submain" transition:fade>{errorMsg}</span>
+					{/each}
+					<input
+						name="password"
+						type="password"
+						class="h-[55px] rounded-lg py-[17px] px-[26px] w-full"
+						placeholder="Enter your Password"
+					/>
+				</label>
 
 				<button
+					disabled={loginLoader}
 					class="bg-submain h-[55px] flex justify-center items-center font-bold text-[20px] text-main rounded-lg"
-					>LOG IN
+				>
+					<Loader
+						name="LOG IN"
+						loader={loginLoader}
+						loaderName="LOGGING IN..."
+						color="border-b-submain"
+					/>
 				</button>
 			</form>
 

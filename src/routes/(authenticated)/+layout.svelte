@@ -37,10 +37,10 @@
 		{#each selections as selection}
 			<a
 				href={selection.url}
-				class=" text-[21px] py-[32.5px] text-center text-white hover:font-bold hover:text-[#E9BA46] transition-all {$authComponent.activeItem ===
+				class=" text-[21px] py-[32.5px] text-center hover:font-bold hover:text-[#E9BA46] transition-all {$authComponent.activeItem ===
 				selection.url
 					? 'bg-[#911F1F] font-bold text-[#E9BA46]'
-					: ''}"
+					: 'text-white'}"
 				on:click={() => {
 					$authComponent.activeItem = selection.url;
 				}}>{selection.title}</a

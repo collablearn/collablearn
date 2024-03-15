@@ -39,7 +39,7 @@
 		</div>
 
 		<div class="mt-[85px] w-[437px]">
-			<div class="flex flex-col gap-[26px]">
+			<form class="flex flex-col gap-[26px]">
 				<input
 					type="email"
 					class="h-[55px] rounded-lg py-[17px] px-[26px]"
@@ -50,12 +50,12 @@
 					class="h-[55px] rounded-lg py-[17px] px-[26px]"
 					placeholder="Enter your Password"
 				/>
+
 				<button
 					class="bg-submain h-[55px] flex justify-center items-center font-bold text-[20px] text-main rounded-lg"
-					on:click={() => goto('/dashboard')}
 					>LOG IN
 				</button>
-			</div>
+			</form>
 
 			<div class="flex items-center justify-center mt-[17px]">
 				<button

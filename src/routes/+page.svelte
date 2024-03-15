@@ -2,7 +2,6 @@
 	import header_icon from '$lib/assets/header_icon.svg';
 	import CreateAccount from '$lib/components/login-components/create-account.svelte';
 	import ForgotPassword from '$lib/components/login-components/forgotpassword.svelte';
-	import { loginComponent } from '$lib';
 
 	import { enhance } from '$app/forms';
 	import { type SubmitFunction } from '@sveltejs/kit';
@@ -10,6 +9,9 @@
 	import type { Session } from '@supabase/supabase-js';
 	import { fade, scale } from 'svelte/transition';
 	import Loader from '$lib/components/general-components/loader.svelte';
+
+	let showRegisterModal = false;
+	let showForgotPasswordModal = false;
 
 	type LoginVal = {
 		email: string[];
@@ -72,10 +74,16 @@
 </script>
 
 <!--Show Forgot Password and Create Account-->
-{#if $loginComponent.showForgotPass}
-	<ForgotPassword />
-{:else if $loginComponent.showCreateAccount}
-	<CreateAccount />
+{#if showForgotPasswordModal}
+	<ForgotPassword
+		bind:showForgotPasswordModal
+		on:click={() => {
+			showForgotPasswordModal = false;
+			showRegisterModal = true;
+		}}
+	/>
+{:else if showRegisterModal}
+	<CreateAccount bind:showRegisterModal />
 {/if}
 
 <div class="h-[1024px] bg-main">
@@ -135,7 +143,7 @@
 			<div class="flex items-center justify-center mt-[17px]">
 				<button
 					class="text-submain font-normal text-[16px]"
-					on:click={() => ($loginComponent.showForgotPass = true)}>Forgot Password?</button
+					on:click={() => (showForgotPasswordModal = true)}>Forgot Password?</button
 				>
 			</div>
 
@@ -143,7 +151,7 @@
 
 			<button
 				class="bg-[#8E7E60] w-full h-[55px] flex justify-center items-center font-semibold text-[20px] rounded-lg mt-[26px] text-white"
-				on:click={() => ($loginComponent.showCreateAccount = true)}>Create New Account</button
+				on:click={() => (showRegisterModal = true)}>Create New Account</button
 			>
 		</div>
 	</div>

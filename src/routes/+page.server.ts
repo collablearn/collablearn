@@ -3,7 +3,7 @@ import { loginSchema, registerSchema } from "$lib/schemas";
 import type { ZodError } from "zod";
 import { fail } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ locals }) => {
 
 };
 
@@ -52,7 +52,11 @@ export const actions: Actions = {
             });
 
             if (registerError) return fail(401, { msg: registerError.message });
-            else if (registerData) return fail(200, { msg: "Account Created.", session: registerData.session });
+            else if (registerData) {
+                const { error: logoutError } = await supabase.auth.signOut();
+                if (logoutError) return fail(401, { msg: logoutError.message });
+                else return fail(200, { msg: "Account Created.", session: registerData.session });
+            }
 
         } catch (error) {
             const zodError = error as ZodError;

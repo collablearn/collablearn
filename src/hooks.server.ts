@@ -7,6 +7,9 @@ const supabaseKEY: string = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabaseAdminKEY: string = import.meta.env.VITE_SUPABASE_ADMIN_KEY;
 
 export const handle: Handle = async ({ event, resolve }) => {
+
+    const { cookies } = event;
+
     event.locals.supabase = createServerClient(supabaseURL, supabaseKEY, {
         cookies: {
             get: (key) => event.cookies.get(key),

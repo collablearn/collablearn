@@ -4,6 +4,7 @@
 	import ForgotPassword from '$lib/components/login-components/forgotpassword.svelte';
 	import { loginComponent } from '$lib';
 	import SuccessModal from '$lib/components/login-components/success-modal.svelte';
+	import { goto } from '$app/navigation';
 
 	const footerLanguage = [
 		'English',
@@ -51,7 +52,7 @@
 				/>
 				<button
 					class="bg-submain h-[55px] flex justify-center items-center font-bold text-[20px] text-main rounded-lg"
-					on:click={() => (showModal = true)}
+					on:click={() => goto('/dashboard')}
 					>LOG IN
 				</button>
 			</div>

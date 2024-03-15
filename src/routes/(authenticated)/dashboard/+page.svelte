@@ -1,6 +1,6 @@
 <script lang="ts">
 	import dashboard_user_icon from '$lib/assets/dashboard_user_icon.svg';
-	import ProjectCard from '$lib/components/user-components/dashboard-components/project-card.svelte';
+	import DashboardCard from '$lib/components/user-components/dashboard-components/dashboard-card.svelte';
 	import { onMount } from 'svelte';
 	import { authComponent } from '$lib';
 
@@ -39,7 +39,7 @@
 			<div class="w-full flex flex-wrap justify-center gap-[32px]">
 				{#each ['', '', '', ''] as sample}
 					<div class="w-[459px] h-[195px]">
-						<ProjectCard />
+						<DashboardCard />
 					</div>
 				{/each}
 			</div>

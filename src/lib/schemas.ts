@@ -12,19 +12,19 @@ export const registerSchema = z.object({
     studentId: z.string().min(1, { message: "Must enter your student id." }),
     email: z.string().email({ message: "Your email must be valid." }),
     password: z.string().min(6, { message: "Must choose a strong password." }),
-    confirmPassword: z.string().min(1, { message: "Must confirm your password." }),
+    confirmPassword: z.string(),
 }).superRefine(({ password, confirmPassword }, ctx) => {
 
     if (password !== confirmPassword) {
         ctx.addIssue({
             code: "custom",
-            message: "Password and Confirm New Password must match",
+            message: "Password and Confirm Password must match",
             path: ["password"]
         });
 
         ctx.addIssue({
             code: "custom",
-            message: "Password and Confirm New Password must match",
+            message: "Password and Confirm Password must match",
             path: ["confirmPassword"]
         })
     }

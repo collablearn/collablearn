@@ -6,7 +6,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
 	import type { Session } from '@supabase/supabase-js';
-	import SuccessModal from './success-modal.svelte';
+	import { staticComponent } from '$lib';
 
 	export let showRegisterModal = false;
 
@@ -39,7 +39,8 @@
 
 			switch (status) {
 				case 200:
-					formActionErrors = null;
+					showRegisterModal = false;
+					$staticComponent.showSuccessCreateAccount = true;
 					registerLoader = false;
 					break;
 
@@ -59,8 +60,6 @@
 		};
 	};
 </script>
-
-<SuccessModal />
 
 {#if showRegisterModal}
 	<div

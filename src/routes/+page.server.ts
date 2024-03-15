@@ -28,7 +28,7 @@ export const actions: Actions = {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();
 
-            return fail(400, { errors: fieldErrors })
+            return fail(400, { errors: fieldErrors });
         }
 
     },
@@ -39,7 +39,20 @@ export const actions: Actions = {
         try {
             const result = registerSchema.parse(formData);
 
+            const { data: registerData, error: registerError } = await supabase.auth.signUp({
+                email: result.email,
+                password: result.password,
+                options: {
+                    data: {
+                        firstName: result.firstName,
+                        lastName: result.lastName,
+                        studentId: result.studentId
+                    }
+                }
+            });
 
+            if (registerError) return fail(401, { msg: registerError.message });
+            else if (registerData) return fail(200, { msg: "Account Created.", session: registerData.session });
 
         } catch (error) {
             const zodError = error as ZodError;

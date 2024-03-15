@@ -2,6 +2,7 @@
 	import header_icon from '$lib/assets/header_icon.svg';
 	import CreateAccount from '$lib/components/login-components/create-account.svelte';
 	import ForgotPassword from '$lib/components/login-components/forgotpassword.svelte';
+	import SuccessModal from '$lib/components/login-components/success-modal.svelte';
 
 	import { enhance } from '$app/forms';
 	import { type SubmitFunction } from '@sveltejs/kit';
@@ -9,6 +10,7 @@
 	import type { Session } from '@supabase/supabase-js';
 	import { fade, scale } from 'svelte/transition';
 	import Loader from '$lib/components/general-components/loader.svelte';
+	import { staticComponent } from '$lib';
 
 	let showRegisterModal = false;
 	let showForgotPasswordModal = false;
@@ -72,6 +74,8 @@
 		};
 	};
 </script>
+
+<SuccessModal bind:showSuccessCreateModal={$staticComponent.showSuccessCreateAccount} />
 
 <!--Show Forgot Password and Create Account-->
 {#if showForgotPasswordModal}

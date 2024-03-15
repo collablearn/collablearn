@@ -1,6 +1,7 @@
 <script lang="ts">
 	import guild_sample_icon from '$lib/assets/guilde_sample_icon.svg';
 	import guild_group_icon from '$lib/assets/guild_group_icons.svg';
+	//stilll on going
 </script>
 
 <div class="py-[30.5px] px-[30px] bg-white flex flex-col w-full">

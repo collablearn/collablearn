@@ -1,6 +1,6 @@
 <script lang="ts">
 	import search_icon from '$lib/assets/search_icon.svg';
-	import GuideCard from '$lib/components/user-components/guild-components/guide-card.svelte';
+	import GuideCard from '$lib/components/user-components/guild-components/guilds-card.svelte';
 	import { authComponent } from '$lib';
 
 	$authComponent.activeItem = '/guilds';

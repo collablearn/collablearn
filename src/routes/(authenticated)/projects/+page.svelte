@@ -2,16 +2,19 @@
 	import search_icon from '$lib/assets/search_icon.svg';
 	import { authComponent } from '$lib';
 	import ProjectCard from '$lib/components/user-components/project-components/project-card.svelte';
+	import NewProjectsModal from '$lib/components/user-components/project-components/new-projects-modal.svelte';
 
 	$authComponent.activeItem = '/projects';
+
+	let showModal = false;
 </script>
 
-<div class="bg-submain min-h-screen pt-[49px] px-[58.5px]">
+<div class="bg-submain min-h-screen pt-[49px] px-[58.5px] relative">
 	<div class="flex items-center justify-between">
 		<div class="flex items-center gap-[24px]">
 			<button
 				class="bg-main text-submain font-semibold text-[16px] rounded-[23.5px] py-[14px] px-[23px] w-[161px]"
-				>NEW PROJECT</button
+				on:click={() => (showModal = true)}>NEW PROJECT</button
 			>
 
 			<button
@@ -52,4 +55,5 @@
 			<div class="w-[25px] h-[25px] bg-[#D9D9D9] rounded-full"></div>
 		</div>
 	</div>
+	<NewProjectsModal bind:showModal />
 </div>

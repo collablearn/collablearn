@@ -1,6 +1,10 @@
 <script lang="ts">
 	import dashboard_user_icon from '$lib/assets/dashboard_user_icon.svg';
 	import ProjectCard from '$lib/components/user-components/dashboard-components/project-card.svelte';
+	import { onMount } from 'svelte';
+	import { authComponent } from '$lib';
+
+	$authComponent.activeItem = '/dashboard';
 </script>
 
 <div class="bg-submain min-h-screen pt-[49px] px-[58.5px]">

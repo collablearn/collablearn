@@ -1,9 +1,12 @@
 import type { Actions, PageServerLoad } from "./$types";
 import { loginSchema, registerSchema } from "$lib/schemas";
 import type { ZodError } from "zod";
-import { fail } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals: { isLogged }, cookies }) => {
+
+    const whoareyou = isLogged();
+    if (whoareyou === "has auth") throw redirect(302, "/dashboard");
 
 };
 

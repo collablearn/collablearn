@@ -11,6 +11,7 @@
 	import { fade, scale } from 'svelte/transition';
 	import Loader from '$lib/components/general-components/loader.svelte';
 	import { staticComponent } from '$lib';
+	import { goto } from '$app/navigation';
 
 	let showRegisterModal = false;
 	let showForgotPasswordModal = false;
@@ -56,6 +57,7 @@
 				case 200:
 					formActionErrors = null;
 					loginLoader = false;
+					goto('/dashboard');
 					break;
 
 				case 400:

@@ -35,13 +35,13 @@
 		<span class="text-[20px] font-semibold text-main">Recent Project(s)</span>
 		<hr class="mt-[13px] border-[1px] border-main" />
 
-		<div class="px-[13px] mt-[39px] gap-[39px] flex">
-			<div class="w-full">
-				<ProjectCard />
-			</div>
-
-			<div class="w-full">
-				<ProjectCard />
+		<div class=" mt-[39px]">
+			<div class="w-full flex flex-wrap justify-center gap-[32px]">
+				{#each ['', '', '', ''] as sample}
+					<div class="w-[459px]">
+						<ProjectCard />
+					</div>
+				{/each}
 			</div>
 		</div>
 	</div>

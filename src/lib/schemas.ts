@@ -30,3 +30,7 @@ export const registerSchema = z.object({
     }
 
 });
+
+export const resetPassSchema = z.object({
+    email: z.string().email({ message: "Email is required." })
+})

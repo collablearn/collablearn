@@ -1,5 +1,5 @@
 import type { Actions, PageServerLoad } from "./$types";
-import { loginSchema, registerSchema } from "$lib/schemas";
+import { loginSchema, registerSchema, resetPassSchema } from "$lib/schemas";
 import type { ZodError } from "zod";
 import { error, fail, redirect } from "@sveltejs/kit";
 
@@ -64,7 +64,23 @@ export const actions: Actions = {
         } catch (error) {
             const zodError = error as ZodError;
             const { fieldErrors } = zodError.flatten();
-            return fail(400, { errors: fieldErrors })
+            return fail(400, { errors: fieldErrors });
+        }
+    },
+
+    resetPassAction: async ({ locals: { supabase }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+
+        try {
+            const result = resetPassSchema.parse(formData);
+            const { error: resetPassError } = await supabase.auth.resetPasswordForEmail(result.email);
+            if (resetPassError) return fail(401, { msg: resetPassError.message });
+            else return fail(200, { msg: `An email containing reset password link has been sent to ${result.email}` });
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
         }
     },
 
@@ -73,6 +89,6 @@ export const actions: Actions = {
         const { error: logoutError } = await supabase.auth.signOut();
 
         if (logoutError) return fail(402, { msg: logoutError.message });
-        else return fail(200, { msg: "Logout success." })
+        else return fail(200, { msg: "Logout success." });
     }
 };

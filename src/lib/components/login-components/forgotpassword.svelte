@@ -80,6 +80,7 @@
 					<input
 						id="email"
 						type="email"
+						name="email"
 						class="h-[62px] w-full rounded-lg bg-submain border-[2px] border-main text-[20px] text-main outline-none px-[25px]"
 						placeholder=""
 					/>

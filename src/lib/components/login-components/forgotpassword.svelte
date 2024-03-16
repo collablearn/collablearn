@@ -2,8 +2,44 @@
 	import reset_pass_icon from '$lib/assets/reset_pass_icon.svg';
 	import close_icon from '$lib/assets/close_icon.svg';
 	import { scale } from 'svelte/transition';
+	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import type { ResultModel } from '$lib/types';
 
 	export let showForgotPasswordModal = false;
+
+	type ResetPassVal = {
+		email: string[];
+	};
+
+	let formActionErrors: ResetPassVal | null = null;
+	let resetPassLoader = false;
+
+	const resetPassActionNews: SubmitFunction = () => {
+		resetPassLoader = true;
+		return async ({ result, update }) => {
+			const {
+				status,
+				data: { msg, errors }
+			} = result as ResultModel<{ msg: string; errors: ResetPassVal }>;
+
+			switch (status) {
+				case 200:
+					formActionErrors = null;
+					resetPassLoader = false;
+					break;
+
+				case 400:
+					formActionErrors = errors;
+					resetPassLoader = false;
+					break;
+
+				case 401:
+					break;
+			}
+			await update();
+		};
+	};
 </script>
 
 {#if showForgotPasswordModal}
@@ -32,7 +68,13 @@
 				>
 			</div>
 
-			<div class="flex flex-col gap-[23px] w-full mt-[42px]">
+			<form
+				method="post"
+				action="?/resetPassAction"
+				enctype="multipart/form-data"
+				use:enhance={resetPassActionNews}
+				class="flex flex-col gap-[23px] w-full mt-[42px]"
+			>
 				<div class="">
 					<label for="email" class="text-[22px] text-main">Email Address</label>
 					<input
@@ -46,7 +88,7 @@
 				<button class="font-bold text-white flex justify-center w-full bg-main py-[19px] rounded-lg"
 					>CONTINUE</button
 				>
-			</div>
+			</form>
 
 			<div class="flex items-center gap-[8px] mt-[86px]">
 				<span class="font-light text-[20px] text-main">Don't have an account?</span>

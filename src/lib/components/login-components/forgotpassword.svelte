@@ -15,6 +15,7 @@
 
 	let formActionErrors: ResetPassVal | null = null;
 	let resetPassLoader = false;
+	let dbMessage = '';
 
 	const resetPassActionNews: SubmitFunction = () => {
 		resetPassLoader = true;
@@ -27,6 +28,7 @@
 			switch (status) {
 				case 200:
 					formActionErrors = null;
+					dbMessage = msg;
 					resetPassLoader = false;
 					break;
 
@@ -36,6 +38,9 @@
 					break;
 
 				case 401:
+					formActionErrors = null;
+					dbMessage = msg;
+					resetPassLoader = false;
 					break;
 			}
 			await update();
@@ -63,10 +68,10 @@
 			</div>
 
 			<div class="mt-[50px]">
-				<span class="text-main font-semibold text-[24px]"
-					>Enter the email address associated with your account and we’ll send you a link to reset
-					your password.</span
-				>
+				<p class="text-main font-semibold text-[24px] text-center">
+					Enter the email address associated with your account and we’ll send you a link to reset
+					your password.
+				</p>
 			</div>
 
 			<form
@@ -74,7 +79,7 @@
 				action="?/resetPassAction"
 				enctype="multipart/form-data"
 				use:enhance={resetPassActionNews}
-				class="flex flex-col gap-[23px] w-full mt-[42px]"
+				class="flex flex-col gap-[23px] w-full mt-[21px]"
 			>
 				<div class="">
 					<label for="email" class="text-[22px] text-main">Email Address</label>
@@ -102,6 +107,10 @@
 			<div class="flex items-center gap-[8px] mt-[86px]">
 				<span class="font-light text-[20px] text-main">Don't have an account?</span>
 				<button class="font-medium text-[20px] text-main underline" on:click>Sign up</button>
+			</div>
+
+			<div class="mx-auto mt-[20px]">
+				<p class=" bg-main text-submain text-center" in:fade>{dbMessage}</p>
 			</div>
 		</div>
 	</div>

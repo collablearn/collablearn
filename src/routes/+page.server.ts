@@ -84,6 +84,10 @@ export const actions: Actions = {
         }
     },
 
+    updatePasswordAction: async ({ locals: { supabase }, request }) => {
+        console.log("HI")
+    },
+
     logoutAction: async ({ locals: { supabase } }) => {
 
         const { error: logoutError } = await supabase.auth.signOut();

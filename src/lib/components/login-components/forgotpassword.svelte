@@ -6,6 +6,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
 	import Loader from '../general-components/loader.svelte';
+	import ResetPasswordForm from './reset-password-form.svelte';
 
 	export let showForgotPasswordModal = false;
 
@@ -67,42 +68,46 @@
 				<img src={reset_pass_icon} alt="reset-pass-icon" class="" />
 			</div>
 
-			<div class="mt-[50px]">
-				<p class="text-main font-semibold text-[24px] text-center">
-					Enter the email address associated with your account and we’ll send you a link to reset
-					your password.
-				</p>
-			</div>
-
-			<form
-				method="post"
-				action="?/resetPassAction"
-				enctype="multipart/form-data"
-				use:enhance={resetPassActionNews}
-				class="flex flex-col gap-[23px] w-full mt-[21px]"
-			>
-				<div class="">
-					<label for="email" class="text-[22px] text-main">Email Address</label>
-					<input
-						id="email"
-						type="email"
-						name="email"
-						class="h-[62px] w-full rounded-lg bg-submain border-[2px] border-main text-[20px] text-main outline-none px-[25px]"
-						placeholder=""
-					/>
+			{#if true}
+				<ResetPasswordForm />
+			{:else}
+				<div class="mt-[50px]">
+					<p class="text-main font-semibold text-[24px] text-center">
+						Enter the email address associated with your account and we’ll send you a link to reset
+						your password.
+					</p>
 				</div>
 
-				{#each formActionErrors?.email ?? [] as errorMsg}
-					<span class="text-main" transition:fade>{errorMsg}</span>
-				{/each}
-
-				<button
-					disabled={resetPassLoader}
-					class="font-bold text-white flex justify-center w-full bg-main py-[19px] rounded-lg"
+				<form
+					method="post"
+					action="?/resetPassAction"
+					enctype="multipart/form-data"
+					use:enhance={resetPassActionNews}
+					class="flex flex-col gap-[23px] w-full mt-[21px]"
 				>
-					<Loader name="CONTINUE" loader={resetPassLoader} loaderName="SENDING LINK..." />
-				</button>
-			</form>
+					<div class="">
+						<label for="email" class="text-[22px] text-main">Email Address</label>
+						<input
+							id="email"
+							type="email"
+							name="email"
+							class="h-[62px] w-full rounded-lg bg-submain border-[2px] border-main text-[20px] text-main outline-none px-[25px]"
+							placeholder=""
+						/>
+					</div>
+
+					{#each formActionErrors?.email ?? [] as errorMsg}
+						<span class="text-main" transition:fade>{errorMsg}</span>
+					{/each}
+
+					<button
+						disabled={resetPassLoader}
+						class="font-bold text-white flex justify-center w-full bg-main py-[19px] rounded-lg"
+					>
+						<Loader name="CONTINUE" loader={resetPassLoader} loaderName="SENDING LINK..." />
+					</button>
+				</form>
+			{/if}
 
 			<div class="flex items-center gap-[8px] mt-[86px]">
 				<span class="font-light text-[20px] text-main">Don't have an account?</span>

@@ -13,9 +13,6 @@
 	import { staticComponent } from '$lib';
 	import { goto } from '$app/navigation';
 
-	let showRegisterModal = false;
-	let showForgotPasswordModal = false;
-
 	type LoginVal = {
 		email: string[];
 		password: string[];
@@ -80,16 +77,10 @@
 <SuccessModal bind:showSuccessCreateModal={$staticComponent.showSuccessCreateAccount} />
 
 <!--Show Forgot Password and Create Account-->
-{#if showForgotPasswordModal}
-	<ForgotPassword
-		bind:showForgotPasswordModal
-		on:click={() => {
-			showForgotPasswordModal = false;
-			showRegisterModal = true;
-		}}
-	/>
-{:else if showRegisterModal}
-	<CreateAccount bind:showRegisterModal />
+{#if $staticComponent.showForgotPassword}
+	<ForgotPassword />
+{:else if $staticComponent.showCreateAccount}
+	<CreateAccount />
 {/if}
 
 <div class="h-[1024px] bg-main">
@@ -149,7 +140,7 @@
 			<div class="flex items-center justify-center mt-[17px]">
 				<button
 					class="text-submain font-normal text-[16px]"
-					on:click={() => (showForgotPasswordModal = true)}>Forgot Password?</button
+					on:click={() => ($staticComponent.showForgotPassword = true)}>Forgot Password?</button
 				>
 			</div>
 
@@ -157,7 +148,7 @@
 
 			<button
 				class="bg-[#8E7E60] w-full h-[55px] flex justify-center items-center font-semibold text-[20px] rounded-lg mt-[26px] text-white"
-				on:click={() => (showRegisterModal = true)}>Create New Account</button
+				on:click={() => ($staticComponent.showCreateAccount = true)}>Create New Account</button
 			>
 		</div>
 	</div>

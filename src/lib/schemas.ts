@@ -38,4 +38,23 @@ export const resetPassSchema = z.object({
 export const passwordResetCodeSchema = z.object({
     email: z.string(),
     passwordResetCode: z.string().min(1, { message: "Must enter the reset code." })
-})
+});
+
+export const updatePasswordSchema = z.object({
+    newPassword: z.string().min(6, { message: "Must choose a strong password." }),
+    confirmNewPassword: z.string()
+}).superRefine(({ newPassword, confirmNewPassword }, ctx) => {
+    if (newPassword !== confirmNewPassword) {
+        ctx.addIssue({
+            code: "custom",
+            message: "New Password and Confirm Password must match.",
+            path: ["newPassword"]
+        });
+
+        ctx.addIssue({
+            code: "custom",
+            message: "Confirm Password must match New Password",
+            path: ["confirmNewPassword"]
+        })
+    }
+});

@@ -1,5 +1,5 @@
 import type { Actions, PageServerLoad } from "./$types";
-import { loginSchema, passwordResetCodeSchema, registerSchema, resetPassSchema } from "$lib/schemas";
+import { loginSchema, passwordResetCodeSchema, registerSchema, resetPassSchema, updatePasswordSchema } from "$lib/schemas";
 import type { ZodError } from "zod";
 import { error, fail, redirect } from "@sveltejs/kit";
 
@@ -93,6 +93,29 @@ export const actions: Actions = {
             const { data: { session }, error: verifyError } = await supabase.auth.verifyOtp({ email: result.email, token: result.passwordResetCode, type: 'email' });
             if (session) return fail(200, { msg: "authenticated" });
             else if (verifyError) return fail(401, { msg: "Invalid Code" });
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
+    },
+
+    updatePasswordAction: async ({ locals: { supabase }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+
+        try {
+            const result = updatePasswordSchema.parse(formData);
+            const { data: { user }, error: updatePasswordError } = await supabase.auth.updateUser({
+                password: result.newPassword
+            });
+
+            if (updatePasswordError) return fail(401, { msg: updatePasswordError.message });
+            else if (user) {
+                const { error: logoutError } = await supabase.auth.signOut();
+                if (logoutError) return fail(401, { msg: logoutError.message });
+                else return fail(200, { msg: "Password Updated." });
+            }
 
         } catch (error) {
             const zodError = error as ZodError;

@@ -5,6 +5,7 @@
 	import type { ResultModel } from '$lib/types';
 	import { fade } from 'svelte/transition';
 	import UpdatePasswordForm from './update-password-form.svelte';
+	import { staticComponent } from '$lib';
 
 	export let email: string = '';
 
@@ -20,7 +21,6 @@
 	let formActionErrors: ResetCodeVal | null = null;
 	let passwordResetCodeLoader = false;
 	let dbMessage = '';
-	let showUpdatePassUI = false;
 
 	const passwordResetCodeActionNews: SubmitFunction = () => {
 		passwordResetCodeLoader = true;
@@ -35,7 +35,7 @@
 					dbMessage = msg;
 					formActionErrors = null;
 					passwordResetCodeLoader = false;
-					showUpdatePassUI = true;
+					$staticComponent.showUpdatePassUI = true;
 					break;
 
 				case 400:
@@ -58,7 +58,7 @@
 	};
 </script>
 
-{#if true}
+{#if $staticComponent.showUpdatePassUI}
 	<UpdatePasswordForm />
 {:else}
 	<form
@@ -67,7 +67,6 @@
 		enctype="multipart/form-data"
 		use:enhance={passwordResetCodeActionNews}
 		class="flex flex-col gap-[23px] w-full mt-[21px]"
-		in:fade
 	>
 		<div class="">
 			<label for="passwordResetCode" class="text-[22px] text-main">Password Reset Code</label>

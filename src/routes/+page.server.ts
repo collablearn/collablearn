@@ -1,5 +1,5 @@
 import type { Actions, PageServerLoad } from "./$types";
-import { loginSchema, registerSchema, resetPassSchema } from "$lib/schemas";
+import { loginSchema, passwordResetCodeSchema, registerSchema, resetPassSchema } from "$lib/schemas";
 import type { ZodError } from "zod";
 import { error, fail, redirect } from "@sveltejs/kit";
 
@@ -84,8 +84,21 @@ export const actions: Actions = {
         }
     },
 
-    updatePasswordAction: async ({ locals: { supabase }, request }) => {
-        console.log("HI")
+    passwordResetCodeAction: async ({ locals: { supabase }, request }) => {
+        const formData = Object.fromEntries(await request.formData());
+
+        try {
+            const result = passwordResetCodeSchema.parse(formData);
+
+            const { data: { session }, error: verifyError } = await supabase.auth.verifyOtp({ email: result.email, token: result.passwordResetCode, type: 'email' });
+            if (session) return fail(200, { msg: "authenticated" });
+            else if (verifyError) return fail(401, { msg: "Invalid Code" });
+
+        } catch (error) {
+            const zodError = error as ZodError;
+            const { fieldErrors } = zodError.flatten();
+            return fail(400, { errors: fieldErrors });
+        }
     },
 
     logoutAction: async ({ locals: { supabase } }) => {

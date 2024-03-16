@@ -17,6 +17,8 @@
 	let formActionErrors: ResetPassVal | null = null;
 	let resetPassLoader = false;
 	let dbMessage = '';
+	let email = '';
+	let showResetCodeUI = false;
 
 	const resetPassActionNews: SubmitFunction = () => {
 		resetPassLoader = true;
@@ -31,6 +33,7 @@
 					formActionErrors = null;
 					dbMessage = msg;
 					resetPassLoader = false;
+					showResetCodeUI = true;
 					break;
 
 				case 400:
@@ -68,8 +71,8 @@
 				<img src={reset_pass_icon} alt="reset-pass-icon" class="" />
 			</div>
 
-			{#if true}
-				<ResetPasswordForm />
+			{#if !showResetCodeUI}
+				<ResetPasswordForm {email} />
 			{:else}
 				<div class="mt-[50px]">
 					<p class="text-main font-semibold text-[24px] text-center">
@@ -93,6 +96,7 @@
 							name="email"
 							class="h-[62px] w-full rounded-lg bg-submain border-[2px] border-main text-[20px] text-main outline-none px-[25px]"
 							placeholder=""
+							bind:value={email}
 						/>
 					</div>
 

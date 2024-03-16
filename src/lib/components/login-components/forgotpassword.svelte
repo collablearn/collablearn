@@ -1,10 +1,11 @@
 <script lang="ts">
 	import reset_pass_icon from '$lib/assets/reset_pass_icon.svg';
 	import close_icon from '$lib/assets/close_icon.svg';
-	import { scale } from 'svelte/transition';
+	import { fade, scale } from 'svelte/transition';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ResultModel } from '$lib/types';
+	import Loader from '../general-components/loader.svelte';
 
 	export let showForgotPasswordModal = false;
 
@@ -86,9 +87,16 @@
 					/>
 				</div>
 
-				<button class="font-bold text-white flex justify-center w-full bg-main py-[19px] rounded-lg"
-					>CONTINUE</button
+				{#each formActionErrors?.email ?? [] as errorMsg}
+					<span class="text-main" transition:fade>{errorMsg}</span>
+				{/each}
+
+				<button
+					disabled={resetPassLoader}
+					class="font-bold text-white flex justify-center w-full bg-main py-[19px] rounded-lg"
 				>
+					<Loader name="CONTINUE" loader={resetPassLoader} loaderName="SENDING LINK..." />
+				</button>
 			</form>
 
 			<div class="flex items-center gap-[8px] mt-[86px]">

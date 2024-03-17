@@ -6,19 +6,18 @@
 	import CreateProject from '$lib/components/user-components/project-components/create-project.svelte';
 
 	$authComponent.activeItem = '/projects';
-
-	let showCreateProject = true;
 </script>
 
 <div class="bg-submain min-h-screen pt-[49px] px-[58.5px] relative">
-	{#if showCreateProject}
+	{#if $authComponent.projectRoute.showCreateNewProject}
 		<CreateProject />
 	{/if}
 	<div class="flex items-center justify-between">
 		<div class="flex items-center gap-[24px]">
 			<button
 				class="bg-main text-submain font-semibold text-[16px] rounded-[23.5px] py-[14px] px-[23px] w-[161px]"
-				on:click={() => (showCreateProject = true)}>NEW PROJECT</button
+				on:click={() => ($authComponent.projectRoute.showCreateNewProject = true)}
+				>NEW PROJECT</button
 			>
 
 			<button

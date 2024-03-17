@@ -11,5 +11,10 @@ export const staticComponent = writable({
 })
 
 export const authComponent = writable({
-    activeItem: ""
+    activeItem: "",
+
+    projectRoute: {
+        showCreateNewProject: false,
+
+    }
 })

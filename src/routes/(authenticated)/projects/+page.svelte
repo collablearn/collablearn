@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import JoinWithPassModal from '$lib/components/user-components/project-components/join-with-pass-modal.svelte';
+	import JoinPublicModal from '$lib/components/user-components/project-components/join-public-modal.svelte';
 
 	$authComponent.activeItem = '/projects';
 
@@ -88,11 +89,13 @@
 	};
 </script>
 
-{#if $authComponent.projectRoute.showLockedModal}
-	<JoinWithPassModal />
-{/if}
-
 <div class="bg-submain min-h-screen pt-[49px] px-[58.5px] relative">
+	{#if $authComponent.projectRoute.showLockedModal}
+		<JoinWithPassModal />
+	{:else if $authComponent.projectRoute.showPublicModal}
+		<JoinPublicModal />
+	{/if}
+
 	{#if $authComponent.projectRoute.showCreateNewProject}
 		<CreateProject />
 	{/if}

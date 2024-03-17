@@ -61,119 +61,118 @@
 	};
 </script>
 
-{#if showRegisterModal}
-	<div
-		class="fixed left-0 right-0 bottom-0 top-0 flex flex-col justify-center items-center bg-[#00000050]"
+<div
+	class="fixed left-0 right-0 bottom-0 top-0 flex flex-col justify-center items-center bg-[#00000050]"
+>
+	<form
+		method="post"
+		action="?/registerAction"
+		enctype="multipart/form-data"
+		use:enhance={registerActionNews}
+		class="min-h-[739px] w-[826px] bg-submain relative flex flex-col px-[50px] py-[43px] shadow-lg shadow-black"
+		in:scale
 	>
-		<form
-			method="post"
-			action="?/registerAction"
-			enctype="multipart/form-data"
-			use:enhance={registerActionNews}
-			class="min-h-[739px] w-[826px] bg-submain relative flex flex-col px-[50px] py-[43px] shadow-lg shadow-black"
-			in:scale
+		<button
+			type="button"
+			class="absolute top-0 right-0 mr-[38px] mt-[28px]"
+			on:click={() => ($staticComponent.showCreateAccount = false)}
 		>
-			<button
-				class="absolute top-0 right-0 mr-[38px] mt-[28px]"
-				on:click={() => (showRegisterModal = false)}
-			>
-				<img src={close_icon} alt="close-icon" class="" />
-			</button>
+			<img src={close_icon} alt="close-icon" class="" />
+		</button>
 
-			<div class="flex flex-col">
-				<span class="font-bold text-[32px] text-main w-full">Create New Account</span>
-				<span class="w-full font-medium text-[20px] text-main">Let's collab to each other!</span>
+		<div class="flex flex-col">
+			<span class="font-bold text-[32px] text-main w-full">Create New Account</span>
+			<span class="w-full font-medium text-[20px] text-main">Let's collab to each other!</span>
 
-				<hr class="mt-[8px] border-[1px] border-main" />
-			</div>
+			<hr class="mt-[8px] border-[1px] border-main" />
+		</div>
 
-			<div class="mt-[35px] px-[17px] flex flex-col gap-[28px]">
-				<div class="w-full flex items-center gap-[20px]">
-					<label class="w-full">
-						{#each formActionErrors?.firstName ?? [] as errorMsg}
-							<span class="text-main" transition:fade>{errorMsg}</span>
-						{/each}
-						<input
-							name="firstName"
-							type="text"
-							class="h-[55px] rounded-lg border-[2px] outline-none border-main bg-submain px-[25px] w-full font-light text-[20px] text-main"
-							placeholder="First Name"
-						/>
-					</label>
-
-					<label class="w-full">
-						{#each formActionErrors?.lastName ?? [] as errorMsg}
-							<span class="text-main" transition:fade>{errorMsg}</span>
-						{/each}
-						<input
-							name="lastName"
-							type="text"
-							class="h-[55px] rounded-lg border-[2px] outline-none border-main bg-submain px-[25px] w-full font-light text-[20px] text-main"
-							placeholder="Last Name"
-						/>
-					</label>
-				</div>
-
-				<labeL>
-					{#each formActionErrors?.studentId ?? [] as errorMsg}
+		<div class="mt-[35px] px-[17px] flex flex-col gap-[28px]">
+			<div class="w-full flex items-center gap-[20px]">
+				<label class="w-full">
+					{#each formActionErrors?.firstName ?? [] as errorMsg}
 						<span class="text-main" transition:fade>{errorMsg}</span>
 					{/each}
 					<input
-						name="studentId"
+						name="firstName"
 						type="text"
 						class="h-[55px] rounded-lg border-[2px] outline-none border-main bg-submain px-[25px] w-full font-light text-[20px] text-main"
-						placeholder="Student ID"
-					/>
-				</labeL>
-
-				<label>
-					{#each formActionErrors?.email ?? [] as errorMsg}
-						<span class="text-main" transition:fade>{errorMsg}</span>
-					{/each}
-					<input
-						name="email"
-						type="email"
-						class="h-[55px] rounded-lg border-[2px] outline-none border-main bg-submain px-[25px] w-full font-light text-[20px] text-main"
-						placeholder="Email Address"
+						placeholder="First Name"
 					/>
 				</label>
 
-				<label>
-					{#each formActionErrors?.password ?? [] as errorMsg}
+				<label class="w-full">
+					{#each formActionErrors?.lastName ?? [] as errorMsg}
 						<span class="text-main" transition:fade>{errorMsg}</span>
 					{/each}
 					<input
-						name="password"
-						type="password"
+						name="lastName"
+						type="text"
 						class="h-[55px] rounded-lg border-[2px] outline-none border-main bg-submain px-[25px] w-full font-light text-[20px] text-main"
-						placeholder="Password"
-					/>
-				</label>
-
-				<label>
-					{#each formActionErrors?.confirmPassword ?? [] as errorMsg}
-						<span class="text-main" transition:fade>{errorMsg}</span>
-					{/each}
-					<input
-						name="confirmPassword"
-						type="password"
-						class="h-[55px] rounded-lg border-[2px] outline-none border-main bg-submain px-[25px] w-full font-light text-[20px] text-main"
-						placeholder="Re-Enter Password"
+						placeholder="Last Name"
 					/>
 				</label>
 			</div>
 
-			<div class="mt-[39px] flex justify-center">
-				<button
-					disabled={registerLoader}
-					class="rounded-[27.5px] bg-main font-bold text-[20] text-white py-[15.5px] flex justify-center w-[262px]"
-				>
-					<Loader name="SIGN UP" loader={registerLoader} loaderName="Creating ..." />
-				</button>
-			</div>
-		</form>
-	</div>
-{/if}
+			<labeL>
+				{#each formActionErrors?.studentId ?? [] as errorMsg}
+					<span class="text-main" transition:fade>{errorMsg}</span>
+				{/each}
+				<input
+					name="studentId"
+					type="text"
+					class="h-[55px] rounded-lg border-[2px] outline-none border-main bg-submain px-[25px] w-full font-light text-[20px] text-main"
+					placeholder="Student ID"
+				/>
+			</labeL>
+
+			<label>
+				{#each formActionErrors?.email ?? [] as errorMsg}
+					<span class="text-main" transition:fade>{errorMsg}</span>
+				{/each}
+				<input
+					name="email"
+					type="email"
+					class="h-[55px] rounded-lg border-[2px] outline-none border-main bg-submain px-[25px] w-full font-light text-[20px] text-main"
+					placeholder="Email Address"
+				/>
+			</label>
+
+			<label>
+				{#each formActionErrors?.password ?? [] as errorMsg}
+					<span class="text-main" transition:fade>{errorMsg}</span>
+				{/each}
+				<input
+					name="password"
+					type="password"
+					class="h-[55px] rounded-lg border-[2px] outline-none border-main bg-submain px-[25px] w-full font-light text-[20px] text-main"
+					placeholder="Password"
+				/>
+			</label>
+
+			<label>
+				{#each formActionErrors?.confirmPassword ?? [] as errorMsg}
+					<span class="text-main" transition:fade>{errorMsg}</span>
+				{/each}
+				<input
+					name="confirmPassword"
+					type="password"
+					class="h-[55px] rounded-lg border-[2px] outline-none border-main bg-submain px-[25px] w-full font-light text-[20px] text-main"
+					placeholder="Re-Enter Password"
+				/>
+			</label>
+		</div>
+
+		<div class="mt-[39px] flex justify-center">
+			<button
+				disabled={registerLoader}
+				class="rounded-[27.5px] bg-main font-bold text-[20] text-white py-[15.5px] flex justify-center w-[262px]"
+			>
+				<Loader name="SIGN UP" loader={registerLoader} loaderName="Creating ..." />
+			</button>
+		</div>
+	</form>
+</div>
 
 <style>
 	::-ms-input-placeholder {

@@ -6,6 +6,7 @@
 	import CreateProject from '$lib/components/user-components/project-components/create-project.svelte';
 	import { onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
+	import JoinWithPassModal from '$lib/components/user-components/project-components/join-with-pass-modal.svelte';
 
 	$authComponent.activeItem = '/projects';
 
@@ -80,7 +81,16 @@
 	};
 
 	onMount(() => (samplePaginated = clientSidePaginate(sampleMockData, 6)));
+
+	const handleClick = (sample: { title: string; isLock: boolean }) => {
+		if (sample.isLock) $authComponent.projectRoute.showLockedModal = true;
+		else $authComponent.projectRoute.showPublicModal = true;
+	};
 </script>
+
+{#if $authComponent.projectRoute.showLockedModal}
+	<JoinWithPassModal />
+{/if}
 
 <div class="bg-submain min-h-screen pt-[49px] px-[58.5px] relative">
 	{#if $authComponent.projectRoute.showCreateNewProject}
@@ -119,7 +129,7 @@
 	<div class="mt-[54px] flex flex-wrap gap-x-[50px] gap-y-[30px] justify-center">
 		{#each displayMockData as sample}
 			<div class="w-[459px] min-h-[195px]">
-				<ProjectCard isLock={sample.isLock} />
+				<ProjectCard isLock={sample.isLock} on:click={() => handleClick(sample)} />
 			</div>
 		{/each}
 	</div>

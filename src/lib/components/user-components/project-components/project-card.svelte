@@ -6,7 +6,7 @@
 	export let isLock = false;
 </script>
 
-<button class="py-[30.5px] px-[30px] bg-white flex flex-col w-full relative text-left">
+<button class="py-[30.5px] px-[30px] bg-white flex flex-col w-full relative text-left" on:click>
 	<img src={projects_sample_rating} alt="rating-icon" class="absolute right-0 mr-[35px]" />
 	<div class="flex gap-[10px] items-center">
 		<div class="relative">

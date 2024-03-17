@@ -15,6 +15,8 @@ export const authComponent = writable({
 
     projectRoute: {
         showCreateNewProject: false,
+        showLockedModal: false,
+        showPublicModal: false,
 
     }
 })

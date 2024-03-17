@@ -117,7 +117,13 @@
 
 		<div class="flex items-center gap-[8px] mt-[86px]">
 			<span class="font-light text-[20px] text-main">Don't have an account?</span>
-			<button class="font-medium text-[20px] text-main underline" on:click>Sign up</button>
+			<button
+				class="font-medium text-[20px] text-main underline"
+				on:click={() => {
+					$staticComponent.showForgotPassword = false;
+					$staticComponent.showCreateAccount = true;
+				}}>Sign up</button
+			>
 		</div>
 
 		<div class="mx-auto mt-[20px]">

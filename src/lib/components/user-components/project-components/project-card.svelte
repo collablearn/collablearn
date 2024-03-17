@@ -1,12 +1,21 @@
 <script lang="ts">
 	import projects_sample_icon from '$lib/assets/projects_sample_icon.svg';
 	import projects_sample_rating from '$lib/assets/projects_sample_rating.svg';
+	import project_lock_icon from '$lib/assets/project_lock_icon.svg';
+
+	export let isLock = false;
 </script>
 
-<div class="py-[30.5px] px-[30px] bg-white flex flex-col w-full">
+<button class="py-[30.5px] px-[30px] bg-white flex flex-col w-full relative text-left">
+	<img src={projects_sample_rating} alt="rating-icon" class="absolute right-0 mr-[35px]" />
 	<div class="flex gap-[10px] items-center">
-		<div class="">
+		<div class="relative">
 			<img src={projects_sample_icon} alt="sample-project-icon" class="" />
+			<img
+				src={project_lock_icon}
+				alt="lock-icon"
+				class="absolute right-0 top-0 {isLock ? 'block' : 'hidden'}"
+			/>
 		</div>
 
 		<div class="flex flex-col gap-[15px] w-full">
@@ -20,6 +29,4 @@
 	</div>
 
 	<div class="w-full h-[25px] rounded-[12px] bg-main mt-[10px]"></div>
-</div>
-
-<div class=""></div>
+</button>

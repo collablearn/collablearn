@@ -1,12 +1,10 @@
 <script lang="ts">
 	import search_icon from '$lib/assets/search_icon.svg';
 	import { authComponent } from '$lib';
+
 	import ProjectCard from '$lib/components/user-components/project-components/project-card.svelte';
-	import NewProjectsModal from '$lib/components/user-components/project-components/new-projects-modal.svelte';
 
 	$authComponent.activeItem = '/projects';
-
-	let showModal = false;
 </script>
 
 <div class="bg-submain min-h-screen pt-[49px] px-[58.5px] relative">
@@ -55,5 +53,4 @@
 			<div class="w-[25px] h-[25px] bg-[#D9D9D9] rounded-full"></div>
 		</div>
 	</div>
-	<NewProjectsModal bind:showModal />
 </div>

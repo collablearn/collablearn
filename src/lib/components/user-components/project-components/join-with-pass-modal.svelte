@@ -3,22 +3,22 @@
 	import close_icon from '$lib/assets/close_icon.svg';
 	import { scale } from 'svelte/transition';
 
-	export let showModal = false;
+	export let showJoinWithPassModal = false;
 </script>
 
-{#if showModal}
+{#if showJoinWithPassModal}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		class="absolute left-0 right-0 top-0 bottom-0 bg-[#00000050] z-10 flex justify-center items-center"
-		on:click|self={() => (showModal = false)}
+		on:click|self={() => (showJoinWithPassModal = false)}
 	>
 		<div
 			class="w-[610px] h-[361px] bg-submain py-[45px] px-[54px] relative shadow-lg shadow-black"
 			in:scale
 		>
 			<div class="absolute top-0 right-0">
-				<button class="mr-[18px] mt-[19px]" on:click={() => (showModal = false)}>
+				<button class="mr-[18px] mt-[19px]" on:click={() => (showJoinWithPassModal = false)}>
 					<img src={close_icon} alt="close-icon" class="" />
 				</button>
 			</div>

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { authComponent } from '$lib';
-	import new_projects_icon from '$lib/assets//new_projects_icon.svg';
 	import close_icon from '$lib/assets/close_icon.svg';
 	import { scale } from 'svelte/transition';
 </script>
@@ -16,7 +15,10 @@
 		in:scale
 	>
 		<div class="absolute right-0 top-0">
-			<button class="mr-[19px] mt-[19px]"><img src={close_icon} alt="close-icon" class="" /></button
+			<button
+				class="mr-[19px] mt-[19px]"
+				on:click={() => ($authComponent.projectRoute.showPublicModal = false)}
+				><img src={close_icon} alt="close-icon" class="" /></button
 			>
 		</div>
 

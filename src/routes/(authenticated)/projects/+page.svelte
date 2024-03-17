@@ -4,8 +4,82 @@
 
 	import ProjectCard from '$lib/components/user-components/project-components/project-card.svelte';
 	import CreateProject from '$lib/components/user-components/project-components/create-project.svelte';
+	import { onMount } from 'svelte';
+	import { flip } from 'svelte/animate';
 
 	$authComponent.activeItem = '/projects';
+
+	let sampleMockData = [
+		{
+			title: 'Vendo Machine Project - PISO WIFI',
+			isLock: true
+		},
+
+		{
+			title: 'Vendo Machine Project - PISO WIFI',
+			isLock: true
+		},
+
+		{
+			title: 'Vendo Machine Project - PISO WIFI',
+			isLock: true
+		},
+
+		{
+			title: 'Vendo Machine Project - PISO WIFI',
+			isLock: false
+		},
+
+		{
+			title: 'Vendo Machine Project - PISO WIFI',
+			isLock: true
+		},
+
+		{
+			title: 'Vendo Machine Project - PISO WIFI',
+			isLock: false
+		},
+		{
+			title: 'Vendo Machine Project - PISO WIFI',
+			isLock: true
+		},
+		{
+			title: 'Vendo Machine Project - PISO WIFI',
+			isLock: false
+		},
+		{
+			title: 'Vendo Machine Project - PISO WIFI',
+			isLock: true
+		},
+		{
+			title: 'Vendo Machine Project - PISO WIFI',
+			isLock: false
+		}
+	];
+
+	let nextPage = 0;
+
+	$: displayMockData = samplePaginated[nextPage];
+
+	let samplePaginated: { title: string; isLock: boolean }[][] = [[]];
+
+	const clientSidePaginate = (array: { title: string; isLock: boolean }[], pageSize: number) => {
+		// Initialize an empty array to store the paginated data
+		const paginatedData = [];
+
+		// Loop through the original array in chunks of 'pageSize' length
+		for (let i = 0; i < array.length; i += pageSize) {
+			// Slice a portion of the array from 'i' to 'i + pageSize'
+			const page = array.slice(i, i + pageSize);
+
+			// Push the sliced page (sub-array) into the 'paginatedData' array
+			paginatedData.push(page);
+		}
+		// Return the paginated data (array of arrays)
+		return paginatedData;
+	};
+
+	onMount(() => (samplePaginated = clientSidePaginate(sampleMockData, 6)));
 </script>
 
 <div class="bg-submain min-h-screen pt-[49px] px-[58.5px] relative">
@@ -43,19 +117,21 @@
 	<hr class="mt-[33px] border-[1px] border-main" />
 
 	<div class="mt-[54px] flex flex-wrap gap-x-[50px] gap-y-[30px] justify-center">
-		{#each ['', '', '', '', '', ''] as sample}
+		{#each displayMockData as sample}
 			<div class="w-[459px] min-h-[195px]">
-				<ProjectCard />
+				<ProjectCard isLock={sample.isLock} />
 			</div>
 		{/each}
 	</div>
 
-	<div class="mt-[59px] flex justify-end">
+	<div class="fixed right-0 bottom-0 mr-[40px] mb-[50px]">
 		<div class="flex items-center gap-[14px]">
-			<div class="w-[25px] h-[25px] bg-main rounded-full"></div>
-			<div class="w-[25px] h-[25px] bg-[#D9D9D9] rounded-full"></div>
-			<div class="w-[25px] h-[25px] bg-[#D9D9D9] rounded-full"></div>
-			<div class="w-[25px] h-[25px] bg-[#D9D9D9] rounded-full"></div>
+			{#each samplePaginated as nothing, index}
+				<button
+					class="w-[25px] h-[25px] {nextPage === index ? 'bg-main' : 'bg-[#D9D9D9]'} rounded-full"
+					on:click={() => (nextPage = index)}
+				></button>
+			{/each}
 		</div>
 	</div>
 </div>
